@@ -1,6 +1,7 @@
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 import type { NextPage } from 'next';
 import Head from 'next/head';
+import { ActionTable } from '../components/ActionTable';
 import styles from '../styles/Home.module.css';
 
 const Home: NextPage = () => {
@@ -27,7 +28,10 @@ const Home: NextPage = () => {
           Get started by editing{' '}
           <code className={styles.code}>pages/index.tsx</code>
         </p>
-
+        
+        {/* ActionTable component inserted here */}
+        <ActionTable />
+        
         <div className={styles.grid}>
           <a className={styles.card} href="https://rainbowkit.com">
             <h2>RainbowKit Documentation &rarr;</h2>

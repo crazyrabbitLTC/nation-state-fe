@@ -1,0 +1,77 @@
+.actionTableContainer {
+  margin: auto;
+  overflow-x: auto;
+}
+
+.actionTable {
+  width: 100%;
+  max-width: 56rem; /* Based on standard GitHub table widths */
+  border-collapse: collapse;
+  margin-top: 2rem;
+  table-layout: fixed;
+}
+
+.actionTable thead th {
+  text-align: left;
+  padding: 0.5rem;
+  border-bottom: 1px solid #e1e4e8;
+  background-color: #f6f8fa;
+}
+
+.actionTable tbody td {
+  padding: 0.5rem;
+  border-bottom: 1px solid #e1e4e8;
+  word-wrap: break-word;
+}
+
+.actionTable tbody tr:nth-child(odd) {
+  background-color: #f6f8fa;
+}
+
+.link {
+  display: inline-block;
+  text-decoration: none;
+  color: #0366d6;
+}
+
+.avatar {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  margin-right: 0.5rem;
+  vertical-align: middle;
+}
+
+/* Styles for action chips with colored backgrounds */
+.NationCreated {
+  background-color: #6f42c1;
+  color: white;
+  padding: 0.2rem 0.6rem;
+  border-radius: 0;
+  display: inline-block;
+}
+
+.CitizenshipClaimed {
+  background-color: #28a745;
+  color: white;
+  padding: 0.2rem 0.6rem;
+  border-radius: 0;
+  display: inline-block;
+}
+
+.RegisteredtoVote {
+  background-color: #dbab09;
+  color: white;
+  padding: 0.2rem 0.6rem;
+  border-radius: 0;
+  display: inline-block;
+}
+
+@media (max-width: 768px) {
+  .actionTableContainer {
+    padding: 0 1rem;
+  }
+  .actionTable {
+    max-width: none;
+  }
+}

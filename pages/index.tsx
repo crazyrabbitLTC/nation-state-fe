@@ -2,7 +2,12 @@ import { ConnectButton } from "@rainbow-me/rainbowkit";
 import type { NextPage } from "next";
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
-import { useWatchContractEvent, useBlockNumber, useClient } from "wagmi";
+import {
+  useWatchContractEvent,
+  useBlockNumber,
+  useClient,
+  useAccount,
+} from "wagmi";
 import { ThePeopleAbi } from "../utils/abis/ThePeopleAbi";
 import { usePublicClient, useConfig, useReadContract } from "wagmi";
 import { useEffect } from "react";
@@ -12,44 +17,25 @@ import { VerifierAddress } from "../utils/constants/deployments";
 import Layout from "../components/layout/layout";
 import ActionBar from "../components/action/actionBar";
 import HomeTable from "../components/homeTable";
-import { VerifierABI } from "../utils/abis/VerifierAbi";
 
-import useGetCountryByAddress  from "../utils/hooks/useGetCountryByAddress";
+import useGetCountryByAddress from "../utils/hooks/useGetCountryByAddress";
+import useGetNationDetails from "../utils/hooks/useGetNationDetails";
+import SupportedCountriesDropdown from "../components/inline/supportedCountriesDropdown";
+import CurrentlyConnectedWallet from "../components/inline/currentlyConnectedWallet";
+import WalletAffiliation from "../components/inline/walletAffiliation";
 
 const Home: NextPage = () => {
   const config = useConfig();
   const publicClient = usePublicClient();
+  const account = useAccount();
 
-  // useEffect(() => {
-  //   const getEvents = async () => {
-  //     const events = await publicClient
-  //       ?.getLogs({
-  //         address: ThePeopleAddress,
-  //         abi: ThePeopleAbi,
-  //         topics: [],
-  //         fromBlock: BigInt(10677037),
-  //         toBlock: BigInt(10679037),
-  //       })
-  //       .then((logs) => {
-  //         logs.forEach((log) => {
-  //           const topics = decodeEventLog({
-  //             abi: ThePeopleAbi,
-  //             ...log,
-  //           });
-  //           console.log(topics);
-  //         });
-  //       });
-  //   };
-
-  //   getEvents();
-  // }, []);
+  const nation = useGetNationDetails("USA");
 
   const address = "0x70ebad30a31657a9cf7a748269c2fb0e63c2e4b7";
   // const address = "0xA70632CA8173FE5db9fa8E5e7b9E691778fe4D45"
 
   const country = useGetCountryByAddress(address);
-  console.log("this country 🚀 ~ country:", country)
-  
+
   return (
     <Layout>
       <div className={styles.container}>
@@ -62,16 +48,155 @@ const Home: NextPage = () => {
           <link href="/favicon.ico" rel="icon" />
         </Head>
 
-        <div className="hero min-h-screen">
-          <div className="hero-content text-center flex flex-col items-center">
-            <div className="max-w-lg">
-              <ActionBar />
+        <ul className="timeline timeline-snap-icon max-md:timeline-compact timeline-vertical">
+          <li className="pt-20">
+            <div className="timeline-middle">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+                className="h-5 w-5"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
+                  clipRule="evenodd"
+                />
+              </svg>
             </div>
-            <div className="max-w-lg">
-              <HomeTable />
+            <div className="timeline-start md:text-end mb-10">
+              <time className="font-mono italic">Step 1</time>
+              <div className="text-lg font-black">
+                Verify your Nationality on Coinbase
+              </div>
+              The address you are connected with <CurrentlyConnectedWallet /> is{" "}
+              <WalletAffiliation /> with any nation. Nation State currently uses
+              the Coinbase Country attestation powered by the Ethereum
+              Attestation Service. Coinbase "attests" that you are a Coinbase
+              user and have submited the proper paperwork to prove your
+              nationality. <br />
+              <button className="btn btn-sm btn-primary mt-10">
+                Visit Coinbase to Verify
+              </button>
             </div>
-          </div>
-        </div>
+            <hr />
+          </li>
+          <li>
+            <hr />
+            <div className="timeline-middle">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+                className="h-5 w-5"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
+                  clipRule="evenodd"
+                />
+              </svg>
+            </div>
+            <div className="timeline-end mb-10">
+              <time className="font-mono italic">Step 1</time>
+              <div className="text-lg font-black">
+                Claim your Citizenship on Nation State
+              </div>
+              Once you're verified on Coinbase, you can claim your citizenship
+              on Nation state. Select your country from the dropdown{" "}
+              <SupportedCountriesDropdown
+                countries={[{ name: "United States", code: "US", emoji: "🇺🇸" }]}
+              />
+              and click "claim citizenship". Currently we only support the USA,
+              but the world is coming soon!
+              <br />
+              <button className="btn btn-primary btn-sm ml-2 mt-10">
+                Claim your Citizenship
+              </button>
+            </div>
+            <hr />
+          </li>
+          <li>
+            <hr />
+            <div className="timeline-middle">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+                className="h-5 w-5"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
+                  clipRule="evenodd"
+                />
+              </svg>
+            </div>
+            <div className="timeline-start md:text-end mb-10">
+              <time className="font-mono italic">Step 3</time>
+              <div className="text-lg font-black">Register to Vote</div>
+              Once you have a citizenship token, you need to lock it in a
+              "juristiction" to begin voting. To start with there is only the
+              Federal juristicion, a place to vote for the whole nation. In the
+              future it will be possilbe to launch States and Local governments.
+            </div>
+            <hr />
+          </li>
+          <li>
+            <hr />
+            <div className="timeline-middle">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+                className="h-5 w-5"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
+                  clipRule="evenodd"
+                />
+              </svg>
+            </div>
+            <div className="timeline-end mb-10">
+              <time className="font-mono italic">2007</time>
+              <div className="text-lg font-black">iPhone</div>
+              iPhone is a line of smartphones produced by Apple Inc. that use
+              Apple's own iOS mobile operating system. The first-generation
+              iPhone was announced by then-Apple CEO Steve Jobs on January 9,
+              2007. Since then, Apple has annually released new iPhone models
+              and iOS updates. As of November 1, 2018, more than 2.2 billion
+              iPhones had been sold. As of 2022, the iPhone accounts for 15.6%
+              of global smartphone market share
+            </div>
+            <hr />
+          </li>
+          <li>
+            <hr />
+            <div className="timeline-middle">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+                className="h-5 w-5"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
+                  clipRule="evenodd"
+                />
+              </svg>
+            </div>
+            <div className="timeline-start md:text-end mb-10">
+              <time className="font-mono italic">2015</time>
+              <div className="text-lg font-black">Apple Watch</div>
+              The Apple Watch is a line of smartwatches produced by Apple Inc.
+              It incorporates fitness tracking, health-oriented capabilities,
+              and wireless telecommunication, and integrates with iOS and other
+              Apple products and services
+            </div>
+          </li>
+        </ul>
       </div>
     </Layout>
   );

@@ -3,7 +3,7 @@ import { useReadContract } from "wagmi";
 import { VerifierABI } from "../abis/VerifierAbi";
 import { VerifierAddress } from "../constants/deployments";
 
-const useGetCountry = (ethereumAddress: string) => {
+const useGetCountry = (ethereumAddress: string | undefined) => {
   const [result, setResult] = useState<{
     data: any;
     status: string;
@@ -23,7 +23,10 @@ const useGetCountry = (ethereumAddress: string) => {
 
 
   useEffect(() => {
-    if (data) {
+    if (!ethereumAddress) {
+      return undefined;
+    }
+    else if (data) {
       setResult({ data, status: "success", error: null });
     } else if (isError) {
       setResult({ data: null, status: "error", error: error?.message });

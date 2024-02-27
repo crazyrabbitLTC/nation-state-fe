@@ -21,8 +21,8 @@ import HomeTable from "../components/homeTable";
 import useGetCountryByAddress from "../utils/hooks/useGetCountryByAddress";
 import useGetNationDetails from "../utils/hooks/useGetNationDetails";
 import SupportedCountriesDropdown from "../components/inline/supportedCountriesDropdown";
-import CurrentlyConnectedWallet from "../components/inline/currentlyConnectedWallet";
-import WalletAffiliation from "../components/inline/walletAffiliation";
+
+import StepOne from "../components/timeline/stepOne";
 
 const Home: NextPage = () => {
   const config = useConfig();
@@ -49,38 +49,7 @@ const Home: NextPage = () => {
         </Head>
 
         <ul className="timeline timeline-snap-icon max-md:timeline-compact timeline-vertical">
-          <li className="pt-20">
-            <div className="timeline-middle">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 20 20"
-                fill="currentColor"
-                className="h-5 w-5"
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
-                  clipRule="evenodd"
-                />
-              </svg>
-            </div>
-            <div className="timeline-start md:text-end mb-10">
-              <time className="font-mono italic">Step 1</time>
-              <div className="text-lg font-black">
-                Verify your Nationality on Coinbase
-              </div>
-              The address you are connected with <CurrentlyConnectedWallet /> is{" "}
-              <WalletAffiliation /> with any nation. Nation State currently uses
-              the Coinbase Country attestation powered by the Ethereum
-              Attestation Service. Coinbase "attests" that you are a Coinbase
-              user and have submited the proper paperwork to prove your
-              nationality. <br />
-              <button className="btn btn-sm btn-primary mt-10">
-                Visit Coinbase to Verify
-              </button>
-            </div>
-            <hr />
-          </li>
+          <StepOne />
           <li>
             <hr />
             <div className="timeline-middle">
